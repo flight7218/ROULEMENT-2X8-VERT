@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2fff2;
+  color: #333;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #2e8b57;
+}
+
+button {
+  background-color: #2e8b57;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #246b45;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+input[type="number"] {
+  width: 80px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+#planningContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.planning-line {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.highlight-r {
+  background-color: yellow;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
