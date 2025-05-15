@@ -1,4 +1,4 @@
-document.getElementById("generateBtn").addEventListener("click", () => {
+function generatePlanning() {
   const container = document.getElementById("planningContainer");
   container.innerHTML = "";
 
@@ -71,7 +71,14 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     line.appendChild(span);
     container.appendChild(line);
   }
-});
+}
+
+// Génération au clic
+document.getElementById("generateBtn").addEventListener("click", generatePlanning);
+
+// Génération automatique au chargement
+window.addEventListener("load", generatePlanning);
+
 
 
 
