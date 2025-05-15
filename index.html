@@ -15,6 +15,24 @@
     <button id="generateBtn">Générer le planning</button>
   </div>
 
+  <hr>
+  <h3>🔧 Modifier un jour du planning</h3>
+  <div class="center">
+    <label for="modifDate">📅 Date :</label>
+    <input type="date" id="modifDate" />
+    <label for="modifValeur">📌 Poste :</label>
+    <select id="modifValeur">
+      <option value="CA">CA</option>
+      <option value="RC">RC</option>
+      <option value="ASA16">ASA16</option>
+      <option value="ASA13">ASA13</option>
+      <option value="M">M</option>
+      <option value="F">F</option>
+      <option value="CE">CE</option>
+    </select>
+    <button id="applyModif">💾 Appliquer</button>
+  </div>
+
   <div id="planningContainer"></div>
 
   <script src="app.js"></script>
