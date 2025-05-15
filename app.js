@@ -1,3 +1,5 @@
+const modifsLocales = {};
+
 document.getElementById("generateBtn").addEventListener("click", () => {
   const container = document.getElementById("planningContainer");
   container.innerHTML = "";
@@ -29,7 +31,12 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     const dayString = currentDate.toLocaleDateString("fr-FR");
 
     const cycleIndex = (i + decalageCycle) % cycleLength;
-    const position = cycle[cycleIndex];
+    let position = cycle[cycleIndex];
+
+    const isoDate = currentDate.toISOString().split("T")[0];
+    if (modifsLocales[isoDate]) {
+      position = modifsLocales[isoDate];
+    }
 
     const line = document.createElement("div");
     line.classList.add("planning-line");
@@ -43,4 +50,15 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   }
 });
 
+document.getElementById("applyModif").addEventListener("click", () => {
+  const dateModif = document.getElementById("modifDate").value;
+  const posteModif = document.getElementById("modifValeur").value;
 
+  if (!dateModif || !posteModif) {
+    alert("Veuillez choisir une date et une valeur.");
+    return;
+  }
+
+  modifsLocales[dateModif] = posteModif;
+  alert(`Modification enregistrée : ${dateModif} → ${posteModif}`);
+});
