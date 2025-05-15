@@ -60,7 +60,7 @@ function generatePlanning() {
     span.style.cursor = "pointer";
 
     span.addEventListener("click", () => {
-      const newPos = prompt("Nouvelle position (ex: CA, RC, ASA13, M, etc.) :", position);
+      const newPos = prompt("Nouvelle position (ex: CA, RC, ASA13, M, A, B, etc.) :", position);
       if (newPos !== null && newPos.trim() !== "") {
         modifications[keyDate] = newPos.trim();
         localStorage.setItem("modifs", JSON.stringify(modifications));
