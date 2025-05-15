@@ -13,26 +13,31 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   const cycle = ["R", "R", "A", "A", "A", "B", "B", "B", "R"];
   const cycleLength = cycle.length;
 
-  const startRef = new Date(2025, 0, 1); // Référence de départ du roulement
+  const startRef = new Date(2025, 0, 1); // 1er janvier 2025
   const dateDebut = new Date(année, 0, 1);
   const dateFin = new Date(année, 11, 31);
+
   const nbJours = Math.round((dateFin - dateDebut) / (1000 * 60 * 60 * 24)) + 1;
+
   const decalage = Math.round((dateDebut - startRef) / (1000 * 60 * 60 * 24));
   const decalageCycle = ((decalage % cycleLength) + cycleLength) % cycleLength;
 
-  // Charger les modifications locales enregistrées
-  const modifs = JSON.parse(localStorage.getItem("modifications") || "{}");
+  // Récupère les modifications enregistrées depuis localStorage
+  const modifications = JSON.parse(localStorage.getItem("modifs") || "{}");
 
   for (let i = 0; i < nbJours; i++) {
     const currentDate = new Date(dateDebut);
     currentDate.setDate(dateDebut.getDate() + i);
 
-    const keyDate = currentDate.toLocaleDateString("fr-CA"); // AAAA-MM-JJ (clé stable pour stockage)
-    const displayDate = currentDate.toLocaleDateString("fr-FR"); // JJ/MM/AAAA pour affichage
+    const keyDate = currentDate.toLocaleDateString("fr-CA");    // Pour stocker : AAAA-MM-JJ
+    const displayDate = currentDate.toLocaleDateString("fr-FR"); // Pour afficher : JJ/MM/AAAA
 
     const cycleIndex = (i + decalageCycle) % cycleLength;
-    const defaultPosition = cycle[cycleIndex];
-    const position = modifs[keyDate] || defaultPosition;
+    let position = cycle[cycleIndex];
+
+    if (modifications[keyDate]) {
+      position = modifications[keyDate];
+    }
 
     const line = document.createElement("div");
     line.classList.add("planning-line");
@@ -40,25 +45,23 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
     const span = document.createElement("span");
     span.textContent = `${position}    ${displayDate}`;
-    line.appendChild(span);
+    span.style.cursor = "pointer";
 
-    line.addEventListener("click", () => {
-      const nouvellePosition = prompt(
-        `Changer la position du ${displayDate} :`,
-        position
-      );
-
-      if (nouvellePosition && nouvellePosition !== position) {
-        modifs[keyDate] = nouvellePosition;
-        localStorage.setItem("modifications", JSON.stringify(modifs));
-        span.textContent = `${nouvellePosition}    ${displayDate}`;
-        console.log(`Modification enregistrée : ${keyDate} → ${nouvellePosition}`);
+    // ➕ Ajouter l'écouteur de clic pour modifier la position
+    span.addEventListener("click", () => {
+      const newPos = prompt("Nouvelle position (ex: CA, RC, ASA13, M, etc.) :", position);
+      if (newPos !== null && newPos.trim() !== "") {
+        modifications[keyDate] = newPos.trim();
+        localStorage.setItem("modifs", JSON.stringify(modifications));
+        span.textContent = `${newPos.trim()}    ${displayDate}`;
       }
     });
 
+    line.appendChild(span);
     container.appendChild(line);
   }
 });
+
 
 
 
